@@ -1,0 +1,324 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            background: #F4F7F9;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(45deg, #1D2671, #C33764);
+            color: white;
+            position: fixed;
+            padding-top: 40px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 16px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .sidebar ul li:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+        .header, .upload-section {
+            background: linear-gradient(90deg, #FF5733, #FFBD33);
+            color: white;
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .upload-section {
+            margin-top: 20px;
+            background: white;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .upload-btn {
+            background: #FF5733;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-btn:hover {
+            background: #C70039;
+        }
+        .table-section {
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            max-height: 500px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            min-width: 150px;
+        }
+        th {
+            background: #1D2671;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background: #F7F7F7;
+        }
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        .pagination {
+            text-align: center;
+            margin: 20px;
+        }
+        .pagination button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background-color:  #C33764;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li>Home</li>
+            <li>Uploads</li>
+            <li>Reports</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            Detail
+        </div>
+        <div class="upload-section">
+            <form id="upload-form">
+                <input type="file" name="file" class="upload-input">
+                <button type="submit" class="upload-btn">Upload</button>
+            </form>
+        </div>
+        <div class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Created At</th>
+                        <th>Name</th>
+                        <th>Short Description</th>
+                        <th>Semrush Global Rank</th>
+                        <th>Semrush Visits Latest Month</th>
+                        <th>Investors</th>
+                        <th>Total Funding</th>
+                        <th>Num Exits</th>
+                        <th>Funding Rounds</th>
+                        <th>Last Funding Type</th>
+                        <th>Last Funding At</th>
+                        <th>Acquisitions</th>
+                        <th>Apptopia Total Apps</th>
+                        <th>Apptopia Total Downloads</th>
+                        <th>Contact Email</th>
+                        <th>Phone</th>
+                        <th>Facebook</th>
+                        <th>LinkedIn</th>
+                        <th>Twitter</th>
+                        <th>Num Investments</th>
+                        <th>Num Lead Investments</th>
+                        <th>Num Lead Investors</th>
+                        <th>Listed Stock Symbol</th>
+                        <th>Company Type</th>
+                        <th>Hub Tags</th>
+                        <th>Operating Status</th>
+                        <th>Founded On</th>
+                        <th>Categories</th>
+                        <th>Founders</th>
+                        <th>Website</th>
+                        <th>IPO Status</th>
+                        <th>Num Employees Enum</th>
+                        <th>Locations</th>
+                        <th>Growth Insight Description</th>
+                        <th>Growth Insight Indicator</th>
+                        <th>Growth Insight Direction</th>
+                        <th>Growth Insight Confidence</th>
+                        <th>Investor Insight Description</th>
+                        <th>Permalink</th>
+                        <th>URL</th>
+                      </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.created_at %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.short_description %></td>
+                            <td><%= user.semrush_global_rank %></td>
+                            <td><%= user.semrush_visits_latest_month %></td>
+                            <td><%= user.num_investors %></td>
+                            <td><%= user.funding_total %></td>
+                            <td><%= user.num_exits %></td>
+                            <td><%= user.num_funding_rounds %></td>
+                            <td><%= user.last_funding_type %></td>
+                            <td><%= user.last_funding_at %></td>
+                            <td><%= user.num_acquisitions %></td>
+                            <td><%= user.apptopia_total_apps %></td>
+                            <td><%= user.apptopia_total_downloads %></td>
+                            <td><%= user.contact_email %></td>
+                            <td><%= user.phone_number %></td>
+                            <td><%= user.facebook %></td>
+                            <td><%= user.linkedin %></td>
+                            <td><%= user.twitter %></td>
+                            <td><%= user.num_investments %></td>
+                            <td><%= user.num_lead_investments %></td>
+                            <td><%= user.num_lead_investors %></td>
+                            <td><%= user.listed_stock_symbol %></td>
+                            <td><%= user.company_type %></td>
+                            <td><%= user.hub_tags %></td>
+                            <td><%= user.operating_status %></td>
+                            <td><%= user.founded_on %></td>
+                            <td><%= user.categories %></td>
+                            <td><%= user.founders%></td>
+                            <td><%= user.website %></td>
+                            <td><%= user.ipo_status %></td>
+                            <td><%= user.num_employees_enum %></td>
+                            <td><%= user.locations %></td>
+                            <td><%= user.growth_insight_description %></td>
+                            <td><%= user.growth_insight_indicator %></td>
+                            <td><%= user.growth_insight_direction %></td>
+                            <td><%= user.growth_insight_confidence %></td>
+                            <td><%= user.investor_insight_description %></td>
+                            <td><%= user.permalink %></td>
+                            <td><%= user.url %></td>
+                          </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="pagination">
+            <button id="prevBtn" <%= currentPage === 1 ? 'disabled' : '' %>>Previous</button>
+            <span>Page <%= currentPage %> of <%= totalPages %></span>
+            <button id="nextBtn" <%= currentPage === totalPages ? 'disabled' : '' %>>Next</button>
+        </div>
+        
+        <script>
+            let currentPage = <%- currentPage %>;
+            let totalPages = <%- totalPages %>;
+        
+            document.getElementById("prevBtn").addEventListener("click", function() {
+                if (currentPage > 1) {
+                    window.location.href = "/users/dashboard?page=" + (currentPage - 1);
+                }
+            });
+        
+            document.getElementById("nextBtn").addEventListener("click", function() {
+                if (currentPage < totalPages) {
+                    window.location.href = "/users/dashboard?page=" + (currentPage + 1);
+                }
+            });
+        
+            $(document).ready(function() {
+                $("#upload-form").submit(function(event) {
+                    event.preventDefault();
+                    var fileInput = $(".upload-input")[0];
+                    var file = fileInput.files[0];
+        
+                    if (!file) {
+                        alert("Please select a file.");
+                        return;
+                    }
+        
+                    var allowedExtensions = ["xls", "xlsx"];
+                    var fileExtension = file.name.split('.').pop().toLowerCase();
+        
+                    if (!allowedExtensions.includes(fileExtension)) {
+                        alert("Only Excel files (.xls, .xlsx) are allowed.");
+                        return;
+                    }
+        
+                    var formData = new FormData();
+                    formData.append("file", file);
+        
+                    $.ajax({
+                        url: "/users/upload",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function() {
+                            $(".upload-btn").text("Uploading...").prop("disabled", true);
+                        },
+                        success: function() {
+                            alert("File uploaded successfully!");
+                            location.reload();
+                        },
+                        error: function() {
+                            alert("File upload failed.");
+                        },
+                        complete: function() {
+                            $(".upload-btn").text("Upload").prop("disabled", false);
+                        }
+                    });
+                });
+            });
+        </script>
+         -->

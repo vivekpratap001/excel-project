@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+<html lang="en" class="material-style layout-fixed">
+
+<head>
+    <title>Detail</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description"
+        content="Bhumlu Bootstrap admin template made using Bootstrap 4, it has tons of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords"
+        content="Bhumlu, bootstrap admin template, bootstrap admin panel, bootstrap 4 admin template, admin template">
+    <meta name="author" content="Srthemesvilla" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+  
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="/assets/fonts/fontawesome.css">
+    <link rel="stylesheet" href="/assets/fonts/ionicons.css">
+    <link rel="stylesheet" href="/assets/fonts/linearicons.css">
+    <link rel="stylesheet" href="/assets/fonts/open-iconic.css">
+    <link rel="stylesheet" href="/assets/fonts/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="/assets/fonts/feather.css">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-material.css">
+    <link rel="stylesheet" href="/assets/css/shreerang-material.css">
+    <link rel="stylesheet" href="/assets/css/uikit.css">
+
+    <!-- Libs -->
+    <link rel="stylesheet" href="/assets/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+   /* Container for profile section */
+   body {
+            background: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .profile-container {
+            max-width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-item {
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        .btn-update, .btn-success {
+            width: 100%;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-update:hover {
+            background: linear-gradient(135deg, #0056b3, #007bff);
+            transform: scale(1.05);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #218838, #28a745);
+            transform: scale(1.05);
+        }
+
+        /* Email Section */
+        #emailFormSection .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- [ Preloader ] Start -->
+    <div class="page-loader">
+        <div class="bg-primary"></div>
+    </div>
+    <!-- [ Preloader ] Ebd -->
+
+    <!-- [ Layout wrapper ] Start -->
+    <div class="layout-wrapper layout-2">
+        <div class="layout-inner">
+            <!-- [ Layout sidenav ] Start -->
+            <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
+                <!-- Brand demo (see assets/css/demo/demo.css) -->
+                <div class="app-brand demo">
+                    <span class="app-brand-logo demo">
+                        <img src="/assets/img/logo.png" alt="Brand Logo" class="img-fluid">
+                    </span>
+                    <a href="" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin</a>
+                    <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
+                        <i class="ion ion-md-menu align-middle"></i>
+                    </a>
+                </div>
+                <div class="sidenav-divider mt-0"></div>
+
+                <!-- Links -->
+                <ul class="sidenav-inner py-1">
+
+
+
+                    <!-- Layouts -->
+
+
+                    <!-- UI elements -->
+
+
+                    <!-- Forms & Tables -->
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-header small font-weight-semibold"></li>
+
+                    <li class="sidenav-item active">
+                        <a href="/users/tables" class="sidenav-link">
+                            <i class="sidenav-icon feather icon-grid"></i>
+                            <div>Tables</div>
+                        </a>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a class="sidenav-link">
+                            <i class="sidenav-icon feather icon-lock"></i>
+                            <button class="logout"
+                                style="background-color:  rgba(29, 34, 83, 0.15); color: #a5a5a5; border: none;">log
+                                out</button>
+                        </a>
+                    </li>
+
+                    <!--  Icons -->
+
+
+                    <!-- Pages -->
+
+
+
+                </ul>
+            </div>
+            <!-- [ Layout sidenav ] End -->
+            <!-- [ Layout container ] Start -->
+            <div class="layout-container">
+                <!-- [ Layout navbar ( Header ) ] Start -->
+
+
+                <!-- Brand demo (see assets/css/demo/demo.css) -->
+                <a  class="navbar-brand app-brand demo d-lg-none py-0 mr-4">
+                    <span class="app-brand-logo demo">
+                        <img src="/assets/img/logo-dark.png" alt="Brand Logo" class="img-fluid">
+                    </span>
+                    <span class="app-brand-text demo font-weight-normal ml-2">Bhumlu</span>
+                </a>
+
+                <!-- Sidenav toggle (see assets/css/demo/demo.css) -->
+                <div class="layout-sidenav-toggle navbar-nav d-lg-none align-items-lg-center mr-auto">
+                    <a class="nav-item nav-link px-0 mr-lg-4" href="javascript:">
+                        <i class="ion ion-md-menu text-large align-middle"></i>
+                    </a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#layout-navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="layout-navbar-collapse">
+                    <!-- Divider -->
+                    <hr class="d-lg-none w-100 my-2">
+
+
+
+                </div>
+                </nav>
+                <!-- [ Layout navbar ( Header ) ] End -->
+
+                <!-- [ Layout content ] Start -->
+
+
+                <!-- [ content ] Start -->
+                <div class="container-fluid flex-grow-1 container-p-y">
+
+                    <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item">User Data</li>
+
+                        </ol>
+                    </div><br>
+
+
+                    
+                        <div class="container profile-container mt-6">
+
+                            
+                                <div class="profile-card">
+                                    <% users.forEach(user=> { %>
+                                        <h4 class="text-center text-primary">👤 User Profile</h4>
+                                    <form>
+                                        <div class="row">
+
+                                            <div class="col-md-6 profile-item">
+                                                <label class="form-label"><strong>Name:</strong></label>
+                                                <input type="text" name="name" class="form-control" id="name"
+                                                    value="<%= user.name %>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="text" class="form-label"><strong>Email:</strong></label>
+                                                <input type="text" name="contact_email" class="form-control" id="email"
+                                                    value="<%= user.contact_email%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="phone" class="form-label"><strong>Phone:</strong></label>
+                                                <input type="text" name="phone_number" class="form-control" id="phone"
+                                                    value="<%= user.phone_number%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="facebook"
+                                                    class="form-label"><strong>Facebook:</strong></label>
+                                                <input type="text" name="facebook" class="form-control" id="facebook"
+                                                    value="<%= user.facebook%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="twitter"
+                                                    class="form-label"><strong>Twitter:</strong></label>
+                                                <input type="text" name="twitter" class="form-control" id="twitter"
+                                                    value="<%= user.twitter%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="linkedin"
+                                                    class="form-label"><strong>LinkedIn:</strong></label>
+                                                <input type="text" name="linkedin" class="form-control" id="linkedin"
+                                                    value="<%= user.linkedin%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="website"
+                                                    class="form-label"><strong>Website:</strong></label>
+                                                <input type="text" name="website" class="form-control" id="website"
+                                                    value="<%= user.website%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="status" class="form-label"><strong>Global
+                                                        Rank:</strong></label>
+                                                <input type="text" name="semrush_global_rank"
+                                                    class="form-control disabled-input" id="status"
+                                                    value="<%= user.semrush_global_rank%>" >
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="status" class="form-label"><strong>Visits Latest
+                                                        Month:</strong></label>
+                                                <input type="text" name="semrush_visits_latest_month"
+                                                    class="form-control" id="status"
+                                                    value="<%= user.semrush_visits_latest_month%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="status"
+                                                    class="form-label"><strong>Investors:</strong></label>
+                                                <input type="text" name="num_investors" class="form-control" id="status"
+                                                    value="<%= user.num_investors%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="status" class="form-label"><strong>Total
+                                                        Funding:</strong></label>
+                                                <input type="text" name="funding_total" class="form-control" id="status"
+                                                    value="<%= user.funding_total%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="status" class="form-label"><strong>Num
+                                                        Exits:</strong></label>
+                                                <input type="text" name="num_exits" class="form-control" id="status"
+                                                    value="<%= user.num_exits%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional1" class="form-label"><strong>Funding
+                                                        Rounds:</strong></label>
+                                                <input type="text" name="num_funding_rounds" class="form-control"
+                                                    id="additional1" value="<%= user.num_funding_rounds%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Last Funding
+                                                        Type:</strong></label>
+                                                <input type="text" name="last_funding_type" class="form-control"
+                                                    id="additional2" value="<%= user.last_funding_type%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Last Funding
+                                                        At:</strong></label>
+                                                <input type="text" name="last_funding_at" class="form-control"
+                                                    id="additional2" value="<%= user.last_funding_at%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2"
+                                                    class="form-label"><strong>Acquisitions:</strong></label>
+                                                <input type="text" name="num_acquisitions" class="form-control"
+                                                    id="additional2" value="<%= user.num_acquisitions%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Apptopia Total
+                                                        Apps:</strong></label>
+                                                <input type="text" name="apptopia_total_apps" class="form-control"
+                                                    id="additional2" value="<%= user.apptopia_total_apps%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Apptopia Total
+                                                        Downloads:</strong></label>
+                                                <input type="text" name="apptopia_total_downloads" class="form-control"
+                                                    id="additional2" value="<%= user.apptopia_total_downloads%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Num
+                                                        Investments:</strong></label>
+                                                <input type="text" name="num_investments" class="form-control"
+                                                    id="additional2" value="<%= user.num_investments%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Num Lead
+                                                        Investments:</strong></label>
+                                                <input type="text" name="num_lead_investments" class="form-control"
+                                                    id="additional2" value="<%= user.num_lead_investments%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Num Lead
+                                                        Investors:</strong></label>
+                                                <input type="text" name="num_lead_investors" class="form-control"
+                                                    id="additional2" value="<%= user.num_lead_investors%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Listed Stock
+                                                        Symbol:</strong></label>
+                                                <input type="text" name="listed_stock_symbol" class="form-control"
+                                                    id="additional2" value="<%= user.listed_stock_symbol%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Company
+                                                        Type:</strong></label>
+                                                <input type="text" name="company_type" class="form-control"
+                                                    id="additional2" value="<%= user.company_type%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Hub
+                                                        Tags:</strong></label>
+                                                <input type="text" name="hub_tags" class="form-control" id="additional2"
+                                                    value="<%= user.hub_tags%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Operating
+                                                        Status:</strong></label>
+                                                <input type="text" name="operating_status" class="form-control"
+                                                    id="additional2" value="<%= user.operating_status%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Founded
+                                                        On:</strong></label>
+                                                <input type="text" name="founded_on" class="form-control disabled-input"
+                                                    id="additional2" value="<%= user.founded_on%>" >
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2"
+                                                    class="form-label"><strong>Categories:</strong></label>
+                                                <input type="text" name="categories" class="form-control"
+                                                    id="additional2" value="<%= user.categories%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2"
+                                                    class="form-label"><strong>Founders:</strong></label>
+                                                <input type="text" name="founders" class="form-control" id="additional2"
+                                                    value="<%= user.founders%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>IPO
+                                                        Status:</strong></label>
+                                                <input type="text" name="ipo_status" class="form-control"
+                                                    id="additional2" value="<%= user.ipo_status%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Num Employees
+                                                        Enum:</strong></label>
+                                                <input type="text" name="num_employees_enum" class="form-control"
+                                                    id="additional2" value="<%= user.num_employees_enum%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2"
+                                                    class="form-label"><strong>Locations:</strong></label>
+                                                <input type="text" name="locations" class="form-control"
+                                                    id="additional2" value="<%= user.locations%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Growth Insight
+                                                        Description:</strong></label>
+                                                <input type="text" name="growth_insight_description"
+                                                    class="form-control" id="additional2"
+                                                    value="<%= user.growth_insight_description%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Growth Insight
+                                                        Indicator:</strong></label>
+                                                <input type="text" name="growth_insight_indicator" class="form-control"
+                                                    id="additional2" value="<%= user.growth_insight_indicator%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Growth Insight
+                                                        Direction:</strong></label>
+                                                <input type="text" name="growth_insight_direction" class="form-control"
+                                                    id="additional2" value="<%= user.growth_insight_direction%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Growth Insight
+                                                        Confidence:</strong></label>
+                                                <input type="text" name="growth_insight_confidence" class="form-control"
+                                                    id="additional2" value="<%= user.growth_insight_confidence%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Investor Insight
+                                                        Description:</strong></label>
+                                                <input type="text" name="investor_insight_description"
+                                                    class="form-control" id="additional2"
+                                                    value="<%= user.investor_insight_description%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2"
+                                                    class="form-label"><strong>Permalink:</strong></label>
+                                                <input type="text" name="permalink" class="form-control"
+                                                    id="additional2" value="<%= user.permalink%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Results
+                                                        URL:</strong></label>
+                                                <input type="text" name="url" class="form-control" id="additional2"
+                                                    value="<%= user.url%>">
+                                            </div>
+                                            <div class="col-md-6 profile-item">
+                                                <label for="additional2" class="form-label"><strong>Created
+                                                        At:</strong></label>
+                                                <input type="text" name="created_at" class="form-control disabled-input"
+                                                    id="additional2" value="<%= user.createdAt%>" >
+                                            </div>
+
+                                            <div class="col-md-6 profile-item">
+                                            <label for="additional2" class="form-label"><b>Description:</b></label>
+                                            <input type="text" name="short_description" class="form-control"
+                                                id="additional2" placeholder="Enter Description"
+                                                value="<%= user.short_description %>">
+                                            </div>
+                                        </div>
+
+
+                               
+                                <button type="button" data-id="<%= user.id %>"
+                                    class="btn btn-primary btn-update">Update</button>
+                                </form>
+                                <% }) %>
+                            </div>
+                                    <!-- Email Section -->
+
+<br>
+
+                                    <div id="emailFormSection">
+                                        <div class="card">
+                                            <h3 class="text-center text-dark fw-bold">✉️ Compose Email</h3>
+                                    
+                                            <form class="emailform">
+                                                <div class="mb-3">
+                                                    <label class="form-label">To</label>
+                                                    <input type="email" class="form-control" name="ftoemail"
+                                                        placeholder="Enter recipient email" required>
+                                                </div>
+                                    
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Cc</label>
+                                                        <input type="text" class="form-control" name="fccemail"
+                                                            placeholder="Enter CC email (optional)">
+                                                    </div>
+                                                </div>
+                                    
+                                                <div class="mb-3 mt-3">
+                                                    <label class="form-label">Subject</label>
+                                                    <input type="text" class="form-control" name="fsubject"
+                                                        placeholder="Enter subject" required>
+                                                </div>
+                                    
+                                                <div class="mb-3">
+                                                    <label for="editor" class="form-label">Message:</label>
+                                                    <div id="editor" style="height: 200px;"></div>
+                                                    <input type="hidden" name="ftextarea" id="hiddenMessage">
+                                                </div>
+                                    
+                                                <div class="text-end">
+                                                    <div class="btn-group">
+                                                        <button type="submit" id="emailbtn" class=" btn-success">📩 Send</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                        </div>
+                        <!-- [ content ] End -->
+
+                        <!-- [ Layout footer ] Start -->
+                        <!-- <nav class="layout-footer footer bg-white">
+                        <div class="container-fluid d-flex flex-wrap justify-content-between text-center container-p-x pb-3">
+                            <div class="pt-3">
+                                <span class="footer-text font-weight-semibold">&copy; <a href="https://srthemesvilla.com" class="footer-link" target="_blank">Srthemesvilla</a></span>
+                            </div>
+                            <div>
+                                <a href="javascript:" class="footer-link pt-3">About Us</a>
+                                <a href="javascript:" class="footer-link pt-3 ml-6">Help</a>
+                                <a href="javascript:" class="footer-link pt-3 ml-4">Contact</a>
+                                <a href="javascript:" class="footer-link pt-3 ml-4">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </nav> -->
+                        <!-- [ Layout footer ] End -->
+
+                    
+                    <!-- [ Layout content ] Start -->
+
+                </div>
+                <!-- [ Layout container ] End -->
+
+            </div>
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-sidenav-toggle"></div>
+        </div>
+        <!-- [ Layout wrapper ] end -->
+
+        <!-- Core scripts -->
+        <script src="/assets/js/pace.js"></script>
+        <script src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script src="/assets/libs/popper/popper.js"></script>
+        <script src="/assets/js/bootstrap.js"></script>
+        <script src="/assets/js/sidenav.js"></script>
+        <script src="/assets/js/layout-helpers.js"></script>
+        <script src="/assets/js/material-ripple.js"></script>
+
+        <!-- Libs -->
+        <script src="/assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+        <!-- Demo -->
+        <script src="/assets/js/demo.js"></script>
+        <script src="/assets/js/analytics.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+<script>
+
+    document.addEventListener("click", function (event) {
+        if (!event.target.classList.contains("logout")) return;
+        event.stopPropagation();
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You will be logged out!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, logout!"
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            Swal.fire({ title: "Logging out...", allowOutsideClick: false, showConfirmButton: false, didOpen: () => Swal.showLoading() });
+
+            fetch("/users/logout", { method: "POST", headers: { "Content-Type": "application/json" } })
+                .then((response) => {
+                    if (!response.ok) throw new Error("Logout failed");
+                    return response.json();
+                })
+                .then(() => {
+                    Swal.fire("Logged out!", "You have been logged out successfully.", "success")
+                        .then(() => (window.location.href = "/users/login"));
+                })
+                .catch((error) => {
+                    console.error("Logout Error:", error);
+                    Swal.fire("Error!", "An error occurred during logout.", "error");
+                });
+        });
+    });
+
+
+
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("btn")) {
+            const id = event.target.dataset.id;
+            console.log("Update button clicked - ID:", id);
+
+            if (!id) {
+                console.error("Error: No ID found on button.");
+                Swal.fire({ icon: "error", text: "Invalid item ID." });
+                return;
+            }
+
+            // Gather form data
+            const formData = {};
+            document.querySelectorAll("input").forEach(input => {
+                formData[input.name] = input.value;
+            });
+            formData.id = id;
+
+            console.log("Data being sent:", formData); // Debugging
+
+            Swal.fire({
+                title: "Do you want to update?",
+                showCancelButton: true,
+                confirmButtonText: "Update",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch("/users/update", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Server Response:", data);
+                            if (data.status === "unauthorized") {
+                                window.location.href = "/users/login";
+                            } else if (data.status === "success") {
+                                Swal.fire({
+                                    icon: "success",
+                                    text: data.message,
+                                    confirmButtonText: "OK",
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/users/tables";
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: data.message,
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Fetch Error:", error);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong. Please try again later.",
+                            });
+                        });
+                }
+            });
+        }
+    });
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const emailBtn = document.querySelector("#emailbtn");
+    const quillEditor = new Quill("#editor", { theme: "snow" });
+
+    if (emailBtn) {
+        emailBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Send",
+                cancelButtonText: "Cancel"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    // Collect form data
+                    const formData = {
+                        ftoemail: document.querySelector("input[name='ftoemail']")?.value.trim() || "",
+                        fccemail: document.querySelector("input[name='fccemail']")?.value.trim() || "",
+                        fsubject: document.querySelector("input[name='fsubject']")?.value.trim() || "",
+                        ftextarea: quillEditor.root.innerHTML.trim() || "" // Fetching Quill's HTML content
+                    };
+
+                    // Validate required fields
+                    if (!formData.ftoemail || !formData.fsubject || !formData.ftextarea) {
+                        Swal.fire({
+                            icon: "warning",
+                            text: "Please fill in all required fields before sending."
+                        });
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch("/users/sendEmail", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.status === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Email sent successfully!"
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            throw new Error(data.message || "Email sending failed.");
+                        }
+                    } catch (error) {
+                        console.error("Email Error:", error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong. Please try again later."
+                        });
+                    }
+                }
+            });
+        });
+    }
+});
+
+
+</script>
