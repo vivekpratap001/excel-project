@@ -273,47 +273,55 @@ exports.tables = (req, res) => {
     const offset = (page - 1) * limit;
 
     let categoryFilter = "";
-    let categoryValues = [] ;
+    let categoryValues = [];
 
     if (req.query.categories) {
-    // console.log("Query Categories:", req.query.categories);
-    
-    const categories = req.query.categories.split(",").map(c => c.trim());
-    // console.log("Parsed Categories:", categories);
-    
-    if (categories.length > 0) {
-      categoryFilter = `AND (${categories.map(() => "categories LIKE ?").join(" OR ")})`;
-      categoryValues = categories.map(cat => `%${cat}%`); // Ensure partial match
-  }
-    }  
-// console.log("Final Category Values:", categoryValues);
+      const categories = req.query.categories.split(",").map(c => c.trim());
+      if (categories.length > 0) {
+        categoryFilter = `AND (${categories.map(() => "categories LIKE ?").join(" AND ")})`;
+        categoryValues = categories.map(cat => `%${cat}%`);
+      }
+    }
+
+    let dateFilter = "";
+    let dateValues = [];
+
+    if (req.query.startDate) {
+      dateFilter += " AND created_at >= ?";
+      dateValues.push(req.query.startDate);
+    }
+
+    if (req.query.endDate) {
+      dateFilter += " AND created_at <= ?";
+      dateValues.push(req.query.endDate);
+    }
 
     const countQuery = `
       SELECT COUNT(*) AS total FROM sheet_data 
       WHERE (name LIKE ? OR short_description LIKE ? OR contact_email LIKE ?) 
-      ${categoryFilter}
+      ${categoryFilter} ${dateFilter}
     `;
 
     pool.query(
       countQuery,
-      [search, search, search, ...categoryValues],
+      [search, search, search, ...categoryValues, ...dateValues],
       (countError, countResults) => {
         if (countError) return res.status(500).json({ error: "Internal Server Error" });
 
         const totalRecords = countResults[0].total;
         const totalPages = Math.max(Math.ceil(totalRecords / limit), 1);
 
-        
-          const dataQuery = `
-  SELECT id, name, short_description, contact_email, phone_number, categories 
-  FROM sheet_data 
-  WHERE (name LIKE ? OR short_description LIKE ? OR contact_email LIKE ?) 
-  ${categoryFilter} ORDER BY id ASC LIMIT ? OFFSET ?
-`;
+        const dataQuery = `
+          SELECT id, name, short_description, contact_email, phone_number, categories, created_at 
+          FROM sheet_data 
+          WHERE (name LIKE ? OR short_description LIKE ? OR contact_email LIKE ?) 
+          ${categoryFilter} ${dateFilter} 
+          ORDER BY id ASC LIMIT ? OFFSET ?
+        `;
 
         pool.query(
           dataQuery,
-          [search, search, search, ...categoryValues, limit, offset],
+          [search, search, search, ...categoryValues, ...dateValues, limit, offset],
           (error, results) => {
             if (error) return res.status(500).json({ error: "Internal Server Error" });
 
@@ -481,54 +489,69 @@ exports.update = function (req, res) {
 
 
 
+const multer = require("multer");
 
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage: storage }).array("attachments"); 
 
 exports.sendEmail = async (req, res) => {
-  try {
-    const { ftoemail: toEmail, fccemail: ccEmail, fsubject: subject, ftextarea: message } = req.body;
-
-    // Validate required fields
-    if (!toEmail || !subject || !message) {
-      return res.status(400).json({ status: "error", message: "Missing required fields" });
+  upload(req, res, async function (err) {
+    if (err) {
+      return res.status(500).json({ status: "error", message: "File upload failed" });
     }
 
-    // Process CC emails safely
-    const ccEmailList = ccEmail
-      ? ccEmail.split(",").map(email => email.trim()).filter(email => email !== "")
-      : [];
+    try {
+      const { ftoemail: toEmail, fccemail: ccEmail, fsubject: subject, ftextarea: message } = req.body;
 
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+      // Validate required fields
+      if (!toEmail || !subject || !message) {
+        return res.status(400).json({ status: "error", message: "Missing required fields" });
+      }
 
-    // Mail options
-    const mailOptions = {
-      from: process.env.EMAIL_USER, // Ensure 'from' email is set
-      to: toEmail,
-      cc: ccEmailList.length > 0 ? ccEmailList : undefined,
-      subject: subject,
-      html: message, // Quill provides HTML content
-    };
+      // Process CC emails
+      const ccEmailList = ccEmail
+        ? ccEmail.split(",").map(email => email.trim()).filter(email => email !== "")
+        : [];
 
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.response);
+      // Create email transporter
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
 
-    return res.status(200).json({ status: "success", message: "Email sent successfully!" });
-  } catch (error) {
-    console.error("Error sending email:", error);
-    return res.status(500).json({ status: "error", message: "Internal server error" });
-  }
+      // Convert uploaded files to nodemailer attachments
+      const attachments = req.files.map(file => ({
+        filename: file.originalname,
+        content: file.buffer, // Using file content directly from memory
+      }));
+
+      // Mail options
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: toEmail,
+        cc: ccEmailList.length > 0 ? ccEmailList : undefined,
+        subject: subject,
+        html: message,
+        attachments: attachments.length > 0 ? attachments : undefined, // Attach only if files exist
+      };
+
+      // Send email
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Email sent:", info.response);
+
+      return res.status(200).json({ status: "success", message: "Email sent successfully!" });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).json({ status: "error", message: "Internal server error" });
+    }
+  });
 };
-
 
 
 

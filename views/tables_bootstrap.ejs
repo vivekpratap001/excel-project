@@ -248,6 +248,14 @@ tr:hover {
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
+        .filter-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap when the container is too small */
+    gap: 8px; /* Adds spacing between elements */
+    align-items: center; /* Aligns items properly */
+    max-width: fit-content;
+}
      </style>
      
 </head>
@@ -492,8 +500,10 @@ tr:hover {
                                 </label>
                                
                             </div> -->
-                            <div class="table-section">
-                                <div class="dropdown d-flex" id="categoryContainer">
+                            <!-- <div class="table-section"> -->
+                                <!-- Category Dropdown -->
+                                
+                                <div class="dropdown d-flex mb-3" id="categoryContainer">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Select Categories
                                     </button>
@@ -513,86 +523,113 @@ tr:hover {
                                                 <input type="checkbox" class="category-checkbox" value="Web Design"> Web Design
                                             </label>
                                         </div>
+                                        <div class="dropdown-item">
+                                            <label>
+                                                <input type="checkbox" class="category-checkbox" value="Advertising">Advertising
+                                            </label>
+                                        </div>
+                                        <div class="dropdown-item">
+                                            <label>
+                                                <input type="checkbox" class="category-checkbox" value="Cloud Computing">Cloud Computing
+                                            </label>
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <br>
                             
-                                
-                                
-                                
-                                    <div class="d-flex justify-content-auto">
+                                <!-- Search Input -->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <!-- Search Bar (Left) -->
+                                    <div class="d-flex justify-content-start">
                                         <label class="nav-item navbar-text navbar-search-box p-0 active">
                                             <i class="feather icon-search navbar-icon align-middle"></i>
-                                            <span class="navbar-search-input pl-2">
-                                                <input id="searchInput" type="text" class="form-control navbar-text mx-2" placeholder="Search...">
-                
-                                            </span>
+                                            <input id="searchInput" type="text" class="form-control mx-2" placeholder="Search...">
                                         </label>
-                                    </div><br>
-        
-                                   <div class="d-flex align-items-center ms-3">
-            <!-- <label class="me-2">Start Date:</label>
-            <input type="text" id="start_date" class="form-control form-control-sm mx-2" style="width: 200px;">
-        </div>
-        
-        <div class="d-flex align-items-center ms-3">
-            <label class="me-2">End Date:</label>
-            <input type="text" id="end_date" class="form-control form-control-sm mx-2" style="width: 200px;">
-        </div> -->
-        
-        
-                                    
-                                    <div class="table-container">
-                                        <!-- <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search..."> -->
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Short Description</th>
-                                                    <th>Contact Email</th>
-                                                    <th>Phone</th>
-                                                    <th>Categories</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="userTable">
-                                                <% if (users.length > 0) { %>
-                                                    <% users.forEach(user => { %>
-                                                        <!-- <tr>
-                                                            <td><%= user.id %></td>
-                                                            <td><%= user.name || "N/A" %></td>
-                                                            <td><%= user.short_description || "N/A" %></td>
-                                                            <td><%= user.contact_email || "N/A" %></td>
-                                                            <td><%= user.phone_number || "N/A" %></td>
-                                                            <td><%= user.categories || "N/A" %></td>
-                                                            <td>
-                                                                <button class="btn btn-danger btn-sm delete" data-id="<%= user.id %>">Delete</button>
-                                                                <a href="/users/detail?id=<%= user.id %>" class="btn btn-primary btn-sm update">View</a>
-                                                            </td>
-                                                        </tr> -->
-                                                    <% }); %>
-                                                <% } else { %>
-                                                    <tr>
-                                                        <td colspan="7" class="text-center">No records found</td>
-                                                    </tr>
-                                                <% } %>
-                                            </tbody>
-                                        </table>
+                                    </div>
+                                
+                                    <!-- Date Filter (Right) -->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="row g-2 align-items-center">
+                                            <!-- Start Date -->
+                                            <div class="col-auto">
+                                                <label for="startDate" class="form-label mb-0 fw-semibold">Start Date</label>
+                                                <input type="date" id="startDate" class="form-control" style="width: 150px;">
+                                            </div>
+                                
+                                            <!-- End Date -->
+                                            <div class="col-auto">
+                                                <label for="endDate" class="form-label mb-0 fw-semibold">End Date</label>
+                                                <input type="date" id="endDate" class="form-control" style="width: 150px;">
+                                            </div>
+                                
+                                            <!-- Filter Button -->
+                                            <div class="col-auto d-flex align-items-end">
+                                                <button id="filterDateBtn" class="btn btn-primary">
+                                                    <i class="bi bi-funnel"></i> Apply
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                <!-- Pagination -->
-                                <div class="pagination-container">
-                                    <div class="pagination-wrapper">
-                                        <button class="btn btn-secondary" id="prevPage" <%= currentPage === 1 ? 'disabled' : '' %>>Previous</button>
-                                        <span class="page-btn active">Page <span id="currentPage"><%= currentPage %></span> of <span id="totalPages"><%= totalPages %></span></span>
-                                        <button class="btn btn-secondary" id="nextPage" <%= currentPage === totalPages ? 'disabled' : '' %>>Next</button>
-                                    </div>
+                                
+                                
+                            
+                                
+                                
+                                
+                            
+                                <!-- Table -->
+                                <div class="table-container">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Short Description</th>
+                                                <th>Contact Email</th>
+                                                <th>Phone</th>
+                                                <th>Categories</th>
+                                                <th>Created At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="userTable">
+                                            <% if (users.length > 0) { %>
+                                                <% users.forEach(user => { %>
+                                                    <tr>
+                                                        <td><%= user.id %></td>
+                                                        <td><%= user.name || "N/A" %></td>
+                                                        <td><%= user.short_description || "N/A" %></td>
+                                                        <td><%= user.contact_email || "N/A" %></td>
+                                                        <td><%= user.phone_number || "N/A" %></td>
+                                                        <td><%= user.categories || "N/A" %></td>
+                                                        <td><%= user.created_at%></td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm delete" data-id="<%= user.id %>">Delete</button>
+                                                            <a href="/users/detail?id=<%= user.id %>" class="btn btn-primary btn-sm update">View</a>
+                                                        </td>
+                                                    </tr>
+                                                <% }); %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td colspan="8" class="text-center">No records found</td>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
                                 </div>
                             
-                    
-                        </div>
+                                <!-- Pagination -->
+                                <div class="pagination-container mt-3">
+                                    <div class="pagination-wrapper d-flex justify-content-center align-items-center">
+                                        <button class="btn btn-secondary me-2" id="prevPage" <%= currentPage === 1 ? 'disabled' : '' %>>Previous</button>
+                                        <span class="page-btn active">Page <span id="currentPage"><%= currentPage %></span> of <span id="totalPages"><%= totalPages %></span></span>
+                                        <button class="btn btn-secondary ms-2" id="nextPage" <%= currentPage >= totalPages ? 'disabled' : '' %>>Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
               
                         <style>
  
@@ -779,26 +816,36 @@ $(document).ready(function () {
   const $nextPage = $("#nextPage");
   const $currentPage = $("#currentPage");
   const $totalPages = $("#totalPages");
+  const $startDate = $("#startDate");
+  const $endDate = $("#endDate");
+  const $filterDateBtn = $("#filterDateBtn");
+  
   let currentPage = 1;
 
-  function fetchData(page = 1, search = "", categories = []) {
-    console.log("Fetching data with: ", { page, search, categories });
-    const categoryQuery = categories.length ? categories.join(",") : "";
+  function fetchData(page = 1, search = "", categories = [], startDate = "", endDate = "") {
+    console.log("Fetching data with:", { page, search, categories, startDate, endDate });
 
-    $.get(`/users/tables?page=${page}&limit=10&search=${encodeURIComponent(search)}&categories=${encodeURIComponent(categoryQuery)}`)
+    const categoryQuery = categories.length ? categories.join(",") : "";
+    const queryString = `/users/tables?page=${page}&limit=10&search=${encodeURIComponent(search)}&categories=${encodeURIComponent(categoryQuery)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+
+    $.get(queryString)
       .done(function (data) {
         console.log("API Response:", data);
-        updateTable(data.users);
-        updatePagination(page, data.totalPages);
+        if (data.users) {
+          updateTable(data.users);
+          updatePagination(page, data.totalPages);
+        } else {
+          $userTable.html("<tr><td colspan='7' class='text-center'>No records found</td></tr>");
+        }
       })
       .fail(function () {
-        console.error("API request failed");
+        console.error("API request failed.");
         $userTable.html("<tr><td colspan='7' class='text-center'>Error loading data. Please try again.</td></tr>");
       });
   }
 
   function updateTable(users) {
-    const rows = users.length 
+    const rows = users.length
       ? users.map(user => `
           <tr>
             <td>${user.id}</td>
@@ -807,6 +854,7 @@ $(document).ready(function () {
             <td>${user.contact_email || "N/A"}</td>
             <td>${user.phone_number || "N/A"}</td>
             <td>${user.categories || "N/A"}</td>
+            <td>${user.created_at|| "N/A"}</td>
             <td>
               <button class="btn btn-danger btn-sm delete" data-id="${user.id}">Delete</button>
               <a href="/users/detail?id=${user.id}" class="btn btn-primary btn-sm update">View</a>
@@ -821,8 +869,8 @@ $(document).ready(function () {
   function updatePagination(page, totalPages) {
     currentPage = page;
     $currentPage.text(page);
-    $totalPages.text(totalPages);
-    $prevPage.prop("disabled", page === 1);
+    $totalPages.text(totalPages || 1);
+    $prevPage.prop("disabled", page <= 1);
     $nextPage.prop("disabled", page >= totalPages);
   }
 
@@ -833,25 +881,27 @@ $(document).ready(function () {
   }
 
   $searchInput.on("keyup", function () {
-    fetchData(1, $(this).val().trim(), getSelectedCategories());
+    fetchData(1, $(this).val().trim(), getSelectedCategories(), $startDate.val(), $endDate.val());
   });
 
   $("#categoryContainer").on("change", ".category-checkbox", function () {
-    fetchData(1, $searchInput.val().trim(), getSelectedCategories());
+    fetchData(1, $searchInput.val().trim(), getSelectedCategories(), $startDate.val(), $endDate.val());
+  });
+
+  $filterDateBtn.on("click", function () {
+    fetchData(1, $searchInput.val().trim(), getSelectedCategories(), $startDate.val(), $endDate.val());
   });
 
   $prevPage.on("click", function () {
-    if (currentPage > 1) fetchData(currentPage - 1, $searchInput.val().trim(), getSelectedCategories());
-    console.log('getSelectedCategories',getSelectedCategories() )
+    if (currentPage > 1) fetchData(currentPage - 1, $searchInput.val().trim(), getSelectedCategories(), $startDate.val(), $endDate.val());
   });
 
   $nextPage.on("click", function () {
-    if (currentPage < parseInt($totalPages.text())) fetchData(currentPage + 1, $searchInput.val().trim(), getSelectedCategories());
+    if (currentPage < parseInt($totalPages.text())) fetchData(currentPage + 1, $searchInput.val().trim(), getSelectedCategories(), $startDate.val(), $endDate.val());
   });
 
   fetchData();
 });
-
 
 // $(document).ready(function () {
 // $('#start_date').daterangepicker({
