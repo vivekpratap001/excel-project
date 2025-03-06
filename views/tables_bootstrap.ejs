@@ -387,6 +387,12 @@ tr:hover {
                             <div>Tables</div>
                         </a>
                     </li>
+                    <li class="sidenav-item">
+                        <a href="/users/users_list" class="sidenav-link">
+                            <i class="sidenav-icon feather icon-user"></i>
+                            <div>Users List</div>
+                        </a>
+                    </li>
 
                     <!--  Icons -->
                     <!-- <li class="sidenav-divider mb-1"></li>
@@ -416,7 +422,7 @@ tr:hover {
                     <li class="sidenav-item">
                         <a  class="sidenav-link">
                             <i class="sidenav-icon feather icon-lock"></i>
-                            <button class="logout" style="background-color:  rgba(29, 34, 83, 0.15); color: #a5a5a5; border: none;">log out</button>
+                            <button class="logout" style="background-color:  rgba(29, 34, 83, 0.15); color: #a5a5a5; border: none;">Log Out</button>
                         </a>
                     </li>
                     <!-- <li class="sidenav-item"> -->
@@ -470,6 +476,7 @@ tr:hover {
                                 </form>
                                 
                             </div>
+                            
                             
         
                             <!-- [ content ] Start -->
@@ -677,9 +684,8 @@ tr:hover {
 document.addEventListener("DOMContentLoaded", () => {
   const uploadButton = document.querySelector(".upload-btn");
   const fileInput = document.querySelector("#file-input");
-  const messageElement = document.querySelector("#message");
 
-  if (!uploadButton || !fileInput || !messageElement) {
+  if (!uploadButton || !fileInput) {
     console.error("Missing one or more required elements.");
     return;
   }
@@ -689,14 +695,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const file = fileInput.files[0];
     if (!file) {
-      showMessage("Please select a file.", "red");
+      alert("Please select a file.");
       return;
     }
 
     const formData = new FormData();
     formData.append("file", file);
-
-    showMessage("Uploading...", "blue");
 
     try {
       const response = await fetch("/users/upload", {
@@ -704,31 +708,19 @@ document.addEventListener("DOMContentLoaded", () => {
         body: formData,
       });
 
-      let data;
-      try {
-        data = await response; // Attempt to parse JSON
-      } catch (jsonError) {
-        throw new Error("Server response is not valid JSON.");
+      const data = await response.json(); // Parse JSON once
+
+      if (!response.ok) {
+        throw new Error(data.message || `Upload failed: ${response.status}`);
       }
 
-      console.log("Server Response:", data);
-
-      if (response.ok) {
-        showMessage(data.message || "Upload successful!", "green");
-      } else {
-        throw new Error(data.message || `Error: ${response.status}`);
-      }
+    //   console.log("Server Response:", data);
+      alert(data.message || "File uploaded successfully!");
     } catch (error) {
       console.error("Upload error:", error);
-      showMessage(error.message || "An error occurred while uploading.", "red");
+      alert("Failed to upload file: " + error.message);
     }
   });
-
-  function showMessage(text, color) {
-    messageElement.textContent = text;
-    messageElement.style.color = color;
-    messageElement.style.display = "block";
-  }
 });
 
 
@@ -754,8 +746,14 @@ document.addEventListener("click", function (event) {
         })
           .then((response) => response.json())
           .then((data) => {
-            Swal.fire("Deleted!", data.message, "success");
-            setTimeout(() => window.location.reload(true), 1000); // Force reload
+            Swal.fire({
+              title: "Deleted!",
+              text: data.message,
+              icon: "success",
+              allowOutsideClick: false, // Prevents closing without clicking OK
+            }).then(() => {
+              window.location.reload(true) ;// Redirect to another page
+            });
           })
           .catch((error) => {
             Swal.fire("Error!", "An error occurred", "error");
@@ -764,6 +762,7 @@ document.addEventListener("click", function (event) {
     });
   }
 });
+
 
       
 

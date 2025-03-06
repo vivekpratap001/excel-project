@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+
+<html lang="en" class="material-style layout-fixed">
+
+<head>
+    <title>Users List</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Bhumlu Bootstrap admin template made using Bootstrap 4, it has tons of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords" content="Bhumlu, bootstrap admin template, bootstrap admin panel, bootstrap 4 admin template, admin template">
+    <meta name="author" content="Srthemesvilla" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="/assets/fonts/fontawesome.css">
+    <link rel="stylesheet" href="/assets/fonts/ionicons.css">
+    <link rel="stylesheet" href="/assets/fonts/linearicons.css">
+    <link rel="stylesheet" href="/assets/fonts/open-iconic.css">
+    <link rel="stylesheet" href="/assets/fonts/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="/assets/fonts/feather.css">
+
+    <!-- Core stylesheets -->
+        <link rel="stylesheet" href="/assets/css/bootstrap-material.css">
+        <link rel="stylesheet" href="/assets/css/shreerang-material.css">
+        <link rel="stylesheet" href="/assets/css/uikit.css">
+
+    <!-- Libs -->
+    <link rel="stylesheet" href="/assets/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <style>
+        .table-section {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            /* max-width: 100%; */
+            
+        }
+        
+        .table-container {
+            
+            /* max-width:89%; */
+            /* width: 85%; */
+            border-radius: 10px;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 120vh;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            min-width: 150px;
+            white-space: nowrap;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        th {
+            background: #f0f0f0;
+            color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        td {
+            background: #fff;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Scrollbar Styling */
+        .table-container::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: #999;
+            border-radius: 3px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #eee;
+        }
+        
+        .pagination-container {
+            
+            max-width: 600px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        
+        .top-section, .bottom-section {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+        }
+        
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .pagination button, .page-btn {
+            background: #b2b1b1;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .pagination button{
+            border: none;
+        }
+        .pagination button:hover, .page-btn:hover {
+            background: #333;
+        }
+        
+        .page-btn.active {
+            background: #222;
+        }
+        
+        
+        
+        
+        /* Button styling */
+        .delete {
+            background: #d9534f; /* Soft red */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .delete:hover {
+            background: #c9302c;
+        }
+        
+        /* Link as a button */
+        .update {
+            display: inline-block;
+            background: #5bc0de; /* Soft blue */
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .update:hover {
+            background: #31b0d5;
+        }
+        
+        
+        .search-container {
+                margin-bottom: 15px;
+            }
+        
+            .search-bar {
+                width: 100%;
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+        
+        
+        
+            .dropdown {
+                    position: relative;
+                    display: inline-block;
+                }
+        
+                .dropbtn {
+                    background-color: #3498db;
+                    color: white;
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 5px;
+                }
+        
+                .dropdown-content {
+                    display: none;
+                    position: absolute;
+                    background-color: #f9f9f9;
+                    min-width: 160px;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                    border-radius: 5px;
+                    z-index: 1;
+                    overflow: hidden;
+                }
+        
+                .dropdown-content a {
+                    color: black;
+                    padding: 10px;
+                    text-decoration: none;
+                    display: block;
+                }
+        
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
+        
+                .dropdown-content input {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 8px;
+                    margin: 5px 0;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                }
+        
+                .filter-container {
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap when the container is too small */
+            gap: 8px; /* Adds spacing between elements */
+            align-items: center; /* Aligns items properly */
+            max-width: fit-content;
+        }
+        .btn-custom {
+            background: linear-gradient(135deg, #7ea4c8, #a2adb8);
+            color: #000000;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 3%;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            transform: scale(1.05);
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+        }
+             </style>
+</head>
+
+<body>
+    <!-- [ Preloader ] Start -->
+    <div class="page-loader">
+        <div class="bg-primary"></div>
+    </div>
+    <!-- [ Preloader ] Ebd -->
+
+    <!-- [ Layout wrapper ] Start -->
+    <div class="layout-wrapper layout-2">
+        <div class="layout-inner">
+            <!-- [ Layout sidenav ] Start -->
+            <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
+                <!-- Brand demo (see assets/css/demo/demo.css) -->
+                <div class="app-brand demo">
+                    <span class="app-brand-logo demo">
+                        <img src="/assets/img/logo.png" alt="Brand Logo" class="img-fluid">
+                    </span>
+                    <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin</a>
+                    <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
+                        <i class="ion ion-md-menu align-middle"></i>
+                    </a>
+                </div>
+                <div class="sidenav-divider mt-0"></div>
+
+                <!-- Links -->
+                <ul class="sidenav-inner py-1">
+
+                    <!-- Dashboards -->
+                 
+
+                    <!-- Layouts -->
+                    <li class="sidenav-divider mb-1"></li>
+                    
+                    
+
+                    <!-- UI elements -->
+                   
+
+                    <!-- Forms & Tables -->
+                    
+                    <li class="sidenav-header small font-weight-semibold"></li>
+                
+                    <li class="sidenav-item active">
+                        <a href="/users/tables" class="sidenav-link">
+                            <i class="sidenav-icon feather icon-grid"></i>
+                            <div>Tables</div>
+                        </a>
+                    </li>
+                    <li class="sidenav-item">
+                        <a href="/users/users_list" class="sidenav-link">
+                            <i class="sidenav-icon feather icon-user"></i>
+                            <div>Users List</div>
+                        </a>
+                    </li>
+
+                    <!--  Icons -->
+                    
+                    
+                  
+
+                    <!-- Pages -->
+                    <li class="sidenav-divider mb-1"></li>
+                   
+                    <li class="sidenav-item">
+                        <a class="sidenav-link">
+                            <i class="sidenav-icon feather icon-lock"></i>
+                            <button class="logout"
+                                style="background-color:  rgba(29, 34, 83, 0.15); color: #a5a5a5; border: none;">Log
+                                Out</button>
+                        </a>
+                    </li>
+                   
+                  
+                </ul>
+            </div>
+            <!-- [ Layout sidenav ] End -->
+            <!-- [ Layout container ] Start -->
+            <div class="layout-container">
+               
+                <!-- <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">|</div> -->
+                <!-- <div class="demo-navbar-user nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
+                            <img src="assets/img/avatars/1.png" alt class="d-block ui-w-30 rounded-circle">
+                            <span class="px-1 mr-lg-2 ml-2 ml-lg-0">Cindy Deitch</span>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="javascript:" class="dropdown-item">
+                            <i class="feather icon-user text-muted"></i> &nbsp; My profile</a>
+                        <a href="javascript:" class="dropdown-item">
+                            <i class="feather icon-mail text-muted"></i> &nbsp; Messages</a>
+                        <a href="javascript:" class="dropdown-item">
+                            <i class="feather icon-settings text-muted"></i> &nbsp; Account settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:" class="dropdown-item">
+                            <i class="feather icon-power text-danger"></i> &nbsp; Log Out</a>
+                    </div>
+                </div> -->
+            </nav>
+            <!-- [ Layout navbar ( Header ) ] End -->
+
+            <!-- [ Layout content ] Start -->
+            <div class="layout-overlay layout-sidenav-toggle"></div>
+            <div class="layout-content">
+              
+                
+
+                <!-- [ content ] Start -->
+                <div class="container-fluid flex-grow-1 container-p-y">
+                    <h4 class="font-weight-bold py-3 mb-0">Users List </h4>
+                    <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item" >Users</li>
+                            <!-- <li class="breadcrumb-item active" ></li> -->
+                        </ol>
+                    </div >
+                    
+                   <!-- <div class="card-body">
+              <div class="dropdown d-flex justify-content-end" >
+                <button class="btn btn-danger dropdown-toggle category-btn" type="button" id="categoryDropdown" data-toggle="dropdown">
+                    Select Categories
+                </button>
+                <div class="dropdown-menu p-3" aria-labelledby="categoryDropdown">
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="category-checkbox" value="Brand Marketing"> Brand Marketing
+                    </label>
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="category-checkbox" value="Email Marketing"> Email Marketing
+                    </label>
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="category-checkbox" value="Web Design"> Web Design
+                    </label>
+                   
+                </div> -->
+                <!-- <div class="table-section"> -->
+                    <!-- Category Dropdown -->
+                    
+                    <!-- <div class="dropdown d-flex mb-3" id="categoryContainer">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Categories
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" class="category-checkbox" value="Brand Marketing"> Brand Marketing
+                                </label>
+                            </div>
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" class="category-checkbox" value="Email Marketing"> Email Marketing
+                                </label>
+                            </div>
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" class="category-checkbox" value="Web Design"> Web Design
+                                </label>
+                            </div>
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" class="category-checkbox" value="Advertising">Advertising
+                                </label>
+                            </div>
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" class="category-checkbox" value="Cloud Computing">Cloud Computing
+                                </label>
+                            </div>
+                            
+                        </div>
+                    </div> -->
+                
+                    <!-- Search Input -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- Search Bar (Left) -->
+                        <div class="d-flex justify-content-start">
+                            <label class="nav-item navbar-text navbar-search-box p-0 active">
+                                <i class="feather icon-search navbar-icon align-middle"></i>
+                                <input id="searchInput" type="text" class="form-control mx-2" placeholder="Search...">
+                            </label>
+                        </div>
+                    
+                        <!-- Date Filter (Right) -->
+                        <!-- <div class="d-flex justify-content-end">
+                            <div class="row g-2 align-items-center"> -->
+                                <!-- Start Date -->
+                                <!-- <div class="col-auto">
+                                    <label for="startDate" class="form-label mb-0 fw-semibold">Start Date</label>
+                                    <input type="date" id="startDate" class="form-control" style="width: 150px;">
+                                </div> -->
+                    
+                                <!-- End Date -->
+                                <!-- <div class="col-auto">
+                                    <label for="endDate" class="form-label mb-0 fw-semibold">End Date</label>
+                                    <input type="date" id="endDate" class="form-control" style="width: 150px;">
+                                </div> -->
+                    
+                                <!-- Filter Button -->
+                                <!-- <div class="col-auto d-flex align-items-end">
+                                    <button id="filterDateBtn" class="btn btn-primary">
+                                        <i class="bi bi-funnel"></i> Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    
+                    <div class="d-flex justify-content-end mt-4">
+                        <a href="http://127.0.0.1:5000/users/adduser" class="btn btn-custom">
+                            Add User
+                        </a>
+                    </div>
+                    
+                
+                    <br>
+                    
+                    
+                
+                    <!-- Table -->
+                    <div class="table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Assign</th>
+                                    <th>Created At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTable">
+                                <% if (users.length > 0) { %>
+                                    <% users.forEach(user => { %>
+                                        <tr>
+                                            <td><%= user.id %></td>
+                                            <td><%= user.name || "N/A" %></td>
+                                            <td><%= user.email || "N/A" %></td>
+                                            <td><%= user.role || "User" %></td>
+                                            <td><%= user.status || "Pending" %></td>
+                                            <td><%= user.assign || "N/A" %></td>
+                                            <td><%= user.createdAt %></td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm delete" data-id="<%= user.id %>">Delete</button>
+                                                <a href="/users/userdetail?id=<%= user.id %>" class="btn btn-primary btn-sm update">View</a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="8" class="text-center">No records found</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                
+                    <!-- Pagination -->
+                    <div class="pagination-container mt-3">
+                        <div class="pagination-wrapper d-flex justify-content-center align-items-center">
+                            <button class="btn btn-secondary me-2" id="prevPage" <%= currentPage === 1 ? 'disabled' : '' %>>Previous</button>
+                            <span class="page-btn active">Page <span id="currentPage"><%= currentPage %></span> of <span id="totalPages"><%= totalPages %></span></span>
+                            <button class="btn btn-secondary ms-2" id="nextPage" <%= currentPage >= totalPages ? 'disabled' : '' %>>Next</button>
+                        </div>
+                    </div>
+                </div>
+                
+  
+            <style>
+
+            </style>
+
+           
+
+   
+    <!-- [ Layout content ] Start -->
+
+</div>
+<!-- [ Layout container ] End -->
+
+</div>
+            <!-- [ Layout container ] End -->
+
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-sidenav-toggle"></div>
+    </div>
+    <!-- [ Layout wrapper ] end -->
+
+    <!-- Core scripts -->
+    <script src="/assets/js/pace.js"></script>
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/libs/popper/popper.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    <script src="/assets/js/sidenav.js"></script>
+    <script src="/assets/js/layout-helpers.js"></script>
+    <script src="/assets/js/material-ripple.js"></script>
+
+    <!-- Libs -->
+    <script src="/assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <!-- Demo -->
+    <script src="/assets/js/demo.js"></script><script src="/assets/js/analytics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+   document.addEventListener("click", function (event) {
+        if (!event.target.classList.contains("logout")) return;
+        event.stopPropagation();
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You will be logged out!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, logout!"
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            Swal.fire({ title: "Logging out...", allowOutsideClick: false, showConfirmButton: false, didOpen: () => Swal.showLoading() });
+
+            fetch("/users/logout", { method: "POST", headers: { "Content-Type": "application/json" } })
+                .then((response) => {
+                    if (!response.ok) throw new Error("Logout failed");
+                    return response.json();
+                })
+                .then(() => {
+                    Swal.fire("Logged out!", "You have been logged out successfully.", "success")
+                        .then(() => (window.location.href = "/users/login"));
+                })
+                .catch((error) => {
+                    console.error("Logout Error:", error);
+                    Swal.fire("Error!", "An error occurred during logout.", "error");
+                });
+        });
+    });
+
+
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("delete")) {
+    let id = event.target.dataset.id;
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch("/users/userdelete", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            Swal.fire({
+              title: "Deleted!",
+              text: data.message,
+              icon: "success",
+              allowOutsideClick: false, // Prevents closing without clicking OK
+            }).then(() => {
+              window.location.reload(true) ;// Redirect to another page
+            });
+          })
+          .catch((error) => {
+            Swal.fire("Error!", "An error occurred", "error");
+          });
+      }
+    });
+  }
+});
+
+
+</script>
+</html>

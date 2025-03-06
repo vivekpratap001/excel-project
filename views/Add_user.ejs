@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DataVista | Registration Page</title>
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    /* Background Gradient */
+    body {
+      background: linear-gradient(135deg, #7498e5, #7ecfd5);
+      font-family: 'Source Sans Pro', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Centered Registration Box */
+    .register-box {
+      width: 400px;
+    }
+
+    /* Card Styling */
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .register-card-body {
+      padding: 30px;
+    }
+
+    /* Input Fields */
+    .input-group .form-control {
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 12px;
+    }
+
+    .input-group-text {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+      background: #007BFF;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+
+    /* Checkbox Label */
+    .icheck-primary label {
+      color: #444;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .register-box {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-box">
+    <div class="card">
+        <div class="card-body register-card-body">
+          <h3 class="text-center mb-3">Add User</h3>
+      
+          <form id="registerForm">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+              <div class="input-group-append">
+                <div class="input-group-text"><span class="fas fa-user"></span></div>
+              </div>
+            </div>
+            
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" name="email" placeholder="Email" required>
+              <div class="input-group-append">
+                <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+              </div>
+            </div>
+      
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" name="password" placeholder="Password" required>
+              <div class="input-group-append">
+                <div class="input-group-text"><span class="fas fa-lock"></span></div>
+              </div>
+            </div>
+      
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required>
+              <div class="input-group-append">
+                <div class="input-group-text"><span class="fas fa-lock"></span></div>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="remember">
+                  <label for="remember"> Remember Me </label>
+                </div>
+              </div>
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">ADD</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  $(document).ready(function () {
+  $("#registerForm").submit(function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Collect form data
+    let formData = {
+      name: $("input[name='name']").val(),
+      email: $("input[name='email']").val(), // Changed from 'femail' to 'email'
+      password: $("input[name='password']").val(),
+      cpassword: $("input[name='cpassword']").val(),
+    };
+
+    // Check if passwords match
+    if (formData.password !== formData.cpassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Passwords do not match!",
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: "Do you want to add this user?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/users/signup",
+          type: "POST",
+          data: JSON.stringify({ name: formData.name, email: formData.email, password: formData.password }), // Corrected data field names
+          contentType: "application/json", // Set content type
+          success: function (response) {
+            Swal.fire({
+              icon: "success",
+              text: "User added successfully!",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              window.location.href = "/users/users_list"; // Redirect after success
+            });
+          },
+          error: function (xhr) {
+            let errorMessage = xhr.responseJSON?.message || "Something went wrong. Please try again.";
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: errorMessage,
+            });
+          }
+        });
+      }
+    });
+  });
+});
+
+
+
+ </script>
+</body>
+</html>
